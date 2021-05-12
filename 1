@@ -1,0 +1,53 @@
+import random
+from math import sqrt
+
+print("Введите целое положительное число: ")
+n = input()
+dots = []
+for i in range(int(n)):
+    for j in range(2):
+        dots.append([random.randint(-100, 100), random.randint(-100, 100)])
+print("Список точек: ")
+print(dots)
+
+dots.sort()
+print("Отсортировано по X: ")
+print(dots)
+
+#Расположение точек против часовой стрелки
+dots_ccw = []
+for i in range(len(dots)):
+    if dots[i][1] > 0 and dots[i][0] > 0:
+        dots_ccw.append(dots[i])
+dots_ccw.sort()
+dots_ccw_0 = dots_ccw[0]
+dots_ccw = [[0,0]]
+dots_ccw[0] = dots_ccw_0
+for i in range(len(dots)):
+    if dots[i][1] > 0 and dots[i][0] < 0:
+        dots_ccw.append(dots[i])
+dots_ccw.sort()
+dots_ccw.reverse()
+for i in range(len(dots)):
+    if dots[i][1] < 0 and dots[i][0] < 0:
+        dots_ccw.append(dots[i])
+for i in range(len(dots)):
+    if dots[i][1] < 0 and dots[i][0] > 0:
+        dots_ccw.append(dots[i])
+for i in range(len(dots)):
+    if dots[i][1] > 0 and dots[i][0] > 0:
+        dots_ccw.append(dots[i])
+
+print("Отсортировано против часовой стрелки: ")
+print(dots_ccw)
+
+# max and min
+dots.sort(key=lambda dot: dot[0] ** 2 + dot[1] ** 2, reverse=True)
+print('Максимальное расстояние до начала координат у точки: ', dots[0])
+print('Минимальное расстояние до начала координат у точки: ', dots[-1])
+
+# medium
+sum_rasst = 0
+for l in range(len(dots)):
+    sum_rasst = sum_rasst + sqrt(dots[l][0] ** 2 + dots[l][1] ** 2)
+print('Среднее расстояние до начала координат: ', sum_rasst / len(dots))
